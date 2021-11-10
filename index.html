@@ -4,10 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <link rel="stylesheet" href="css/styles.css" />
-    <title>Paint</title>
+    <title>PAINT</title>
 </head>
 <body>
+    <aside class="menu" id="jsMenu">
+        <div id="jsOpen">
+            <label>
+                <i class="far fa-folder-open"></i>
+                <input type="file" accept="image/*"/>
+            </label>
+        </div>
+        <div id="jsSave"><i class="fas fa-save"></i></div>
+        <div id="jsReset"><i class="fas fa-sync-alt"></i></div>
+    </aside>
     <canvas class="canvas" id="jsCanvas" ></canvas>
     <div class="controls">
         <div class="controls__range">
@@ -22,7 +33,6 @@
         </div>
         <div class="controls__btns">
             <button id="jsMode">Fill</button>
-            <button id="jsSave">Save</button>
         </div>
         <div class="controls__colors" id="jsColors">
             <div class="controls__color jsColor" style="background-color:#2c2c2c"></div>

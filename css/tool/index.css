@@ -1,0 +1,13 @@
+@import "./menu.css";
+
+aside {
+  border-radius: 14px;
+  font-size: 1.4rem;
+  display: flex;
+}
+
+.menu {
+  width: 12rem;
+  margin-bottom: 1rem;
+  justify-content: space-between;
+}
