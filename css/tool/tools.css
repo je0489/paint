@@ -1,0 +1,21 @@
+.tool section {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.tool section:first-child,
+.tool section:last-child {
+  flex-grow: 1;
+}
+
+.tool section:nth-child(2) {
+  flex-grow: 1.5;
+}
+
+.tool section:not(:last-child) {
+  border-right: 0.5px solid #b1b1b1;
+}
+
+.tool section div:hover {
+  color: #00eaa0;
+}

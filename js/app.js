@@ -3,17 +3,29 @@ const ctx = canvas.getContext("2d");
 const openBtn = document.getElementById("jsOpen");
 const saveBtn = document.getElementById("jsSave");
 const resetBtn = document.getElementById("jsReset");
+const paintBtn = document.getElementById("jsPaint");
+const fillBnt = document.getElementById("jsFill");
+
 const colors = document.getElementsByClassName("jsColor");
 const range = document.getElementById("jsRange");
-const mode = document.getElementById("jsMode");
 
 const INITIAL_COLOR = "#2c2c2c";
+const SECECT_COLOR = "#00eaa0";
 const CANVAS_SIZE = 700;
 
 let painting, filling;
-
-canvas.width = CANVAS_SIZE;
-canvas.height = CANVAS_SIZE;
+const isFill = {
+  0: () => {
+    filling = false;
+    paintBtn.style.color = SECECT_COLOR;
+    fillBnt.style.color = "#000";
+  },
+  1: () => {
+    filling = true;
+    paintBtn.style.color = "#000";
+    fillBnt.style.color = SECECT_COLOR;
+  },
+};
 
 const resetCanvas = () => {
   ctx.fillStyle = "white";
@@ -23,20 +35,19 @@ const resetCanvas = () => {
   ctx.fillStyle = "INITIAL_COLOR";
   ctx.lineWidth = 2.5;
 
+  canvas.width = CANVAS_SIZE;
+  canvas.height = CANVAS_SIZE;
+
+  paintBtn.style.color = SECECT_COLOR;
   painting = filling = false;
 };
 
-function startPainting() {
-  painting = true;
-}
+const startPainting = () => (painting = true);
+const stopPainting = () => (painting = false);
 
-function stopPainting() {
-  painting = false;
-}
-
-function onMouseMove(event) {
-  const x = event.offsetX,
-    y = event.offsetY;
+const onMouseMove = ({ offsetX, offsetY }) => {
+  const x = offsetX,
+    y = offsetY;
   if (!painting) {
     ctx.beginPath();
     ctx.moveTo(x, y);
@@ -44,7 +55,7 @@ function onMouseMove(event) {
     ctx.lineTo(x, y);
     ctx.stroke();
   }
-}
+};
 
 function handleColorClick(event) {
   const color = event.target.style.backgroundColor;
@@ -52,24 +63,9 @@ function handleColorClick(event) {
   ctx.fillStyle = color;
 }
 
-function handleRangeChange(event) {
-  const size = event.target.value;
-  ctx.lineWidth = size;
-}
-
-function handleModeClick() {
-  if (filling) {
-    filling = false;
-    mode.innerText = "Fill";
-  } else {
-    filling = true;
-    mode.innerText = "Paint";
-  }
-}
-
-function handleCanvasClick() {
+const handleCanvasClick = () => {
   if (filling) ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
-}
+};
 
 const handleImageOpenchange = ({ target: { files } }) => {
   const file = files[0],
@@ -91,19 +87,14 @@ const handleSaveClick = () => {
   link.click();
 };
 
-function handleCM(event) {
-  event.preventDefault();
-}
-
 if (canvas) {
   resetCanvas();
-
   canvas.addEventListener("mousemove", onMouseMove);
   canvas.addEventListener("mousedown", startPainting);
   canvas.addEventListener("mouseup", stopPainting);
   canvas.addEventListener("mouseleave", stopPainting);
   canvas.addEventListener("click", handleCanvasClick);
-  canvas.addEventListener("contextmenu", handleCM);
+  canvas.addEventListener("contextmenu", (event) => event.preventDefault());
 }
 
 Array.from(colors).forEach((color) =>
@@ -114,5 +105,7 @@ if (openBtn) openBtn.addEventListener("change", handleImageOpenchange);
 if (saveBtn) saveBtn.addEventListener("click", handleSaveClick);
 if (resetBtn) resetBtn.addEventListener("click", () => resetCanvas());
 
+if (paintBtn) paintBtn.addEventListener("click", isFill[0]);
+if (fillBnt) fillBnt.addEventListener("click", isFill[1]);
+
 if (range) range.addEventListener("input", handleRangeChange);
-if (mode) mode.addEventListener("click", handleModeClick);
