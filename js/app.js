@@ -6,12 +6,16 @@ const resetBtn = document.getElementById("jsReset");
 const paintBtn = document.getElementById("jsPaint");
 const fillBnt = document.getElementById("jsFill");
 
-const colors = document.getElementsByClassName("jsColor");
+const rangeBtn = document.getElementById("jsSelectRange");
+const rangeDiv = document.getElementById("jsRangeDiv");
 const range = document.getElementById("jsRange");
 
-const INITIAL_COLOR = "#2c2c2c";
-const SECECT_COLOR = "#00eaa0";
-const CANVAS_SIZE = 700;
+const colors = document.getElementsByClassName("jsColor");
+
+const INITIAL_COLOR = "#2c2c2c",
+  SECECT_COLOR = "#00eaa0",
+  CANVAS_SIZE = 700,
+  SHOWING_CN = "showing";
 
 let painting, filling;
 const isFill = {
@@ -63,6 +67,19 @@ function handleColorClick(event) {
   ctx.fillStyle = color;
 }
 
+const handleRangeClick = () => {
+  rangeDiv.classList.add(SHOWING_CN);
+  setInterval(() => {
+    rangeDiv.classList.remove(SHOWING_CN);
+  }, 7000);
+};
+
+const handleRangeChange = ({ target }) => {
+  const { value: size } = target;
+  ctx.lineWidth = size;
+  target.setAttribute("data-before", `${size} |`);
+};
+
 const handleCanvasClick = () => {
   if (filling) ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
 };
@@ -108,4 +125,5 @@ if (resetBtn) resetBtn.addEventListener("click", () => resetCanvas());
 if (paintBtn) paintBtn.addEventListener("click", isFill[0]);
 if (fillBnt) fillBnt.addEventListener("click", isFill[1]);
 
+if (rangeBtn) rangeBtn.addEventListener("click", handleRangeClick);
 if (range) range.addEventListener("input", handleRangeChange);

@@ -21,7 +21,18 @@
     </aside>
     <aside class="tool" id="jsTool">
         <section>
-            <div><i class="fas fa-sliders-h"> </i></div>
+            <div id="jsSelectRange"><i class="fas fa-sliders-h"></i></div>
+            <div class="set-variable hidden" id="jsRangeDiv">
+                <input
+                    type="range"
+                    id="jsRange"
+                    min="0.1"
+                    max="10"
+                    value="2.5"
+                    step="0.1"
+                    data-before="2.5 |"
+                />
+            </div>
         </section>
         <section>
             <div id="jsPaint"><i class="fas fa-pencil-alt"></i></div>
@@ -33,16 +44,6 @@
     </aside>
     <canvas class="canvas" id="jsCanvas" ></canvas>
     <div class="controls">
-        <div class="controls__range">
-            <input
-              type="range"
-              id="jsRange"
-              min="0.1"
-              max="5"
-              value="2.5"
-              step="0.1"
-            />
-        </div>
         <div class="controls__colors" id="jsColors">
             <div class="controls__color jsColor" style="background-color:#2c2c2c"></div>
             <div class="controls__color jsColor" style="background-color:white"></div>

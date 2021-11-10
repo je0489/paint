@@ -16,6 +16,53 @@
   border-right: 0.5px solid #b1b1b1;
 }
 
-.tool section div:hover {
+.tool section div i:hover:not(.fa-palette) {
   color: #00eaa0;
+}
+
+.set-variable {
+  position: absolute;
+  margin-top: 2.2rem;
+  padding: 0 0.7rem 0 2.5rem;
+  color: #fff;
+  background: #313435;
+  border-radius: 0.4em;
+  font-size: 0.8rem;
+  font-weight: 800;
+  height: 2rem;
+  z-index: 1;
+  transition-property: display;
+  transition-delay: 2s;
+  transition-duration: 1s;
+}
+
+.set-variable:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border: 0.6rem solid transparent;
+  border-bottom-color: #313435;
+  border-top: 0;
+  margin-left: -0.6rem;
+  margin-top: -0.6rem;
+  z-index: 1;
+}
+
+.set-variable input[type="range"]:before {
+  content: attr(data-before);
+  color: #fff;
+  margin-left: -2rem;
+  vertical-align: -webkit-baseline-middle;
+  font-weight: 800;
+}
+
+.hidden {
+  display: none;
+}
+
+.showing {
+  display: flex;
 }
