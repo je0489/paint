@@ -42,8 +42,8 @@ const resetCanvas = () => {
   canvas.width = CANVAS_SIZE;
   canvas.height = CANVAS_SIZE;
 
-  paintBtn.style.color = SECECT_COLOR;
-  painting = filling = false;
+  isFill[0]();
+  painting = false;
 };
 
 const startPainting = () => (painting = true);
@@ -67,17 +67,18 @@ function handleColorClick(event) {
   ctx.fillStyle = color;
 }
 
-const handleRangeClick = () => {
-  rangeDiv.classList.add(SHOWING_CN);
-  setInterval(() => {
-    rangeDiv.classList.remove(SHOWING_CN);
-  }, 7000);
-};
-
 const handleRangeChange = ({ target }) => {
   const { value: size } = target;
   ctx.lineWidth = size;
   target.setAttribute("data-before", `${size} |`);
+};
+
+const handleRangeDivHidden = ({
+  target: {
+    parentNode: { id },
+  },
+}) => {
+  if (!id.includes("Range")) rangeDiv.classList.remove(SHOWING_CN);
 };
 
 const handleCanvasClick = () => {
@@ -125,5 +126,8 @@ if (resetBtn) resetBtn.addEventListener("click", () => resetCanvas());
 if (paintBtn) paintBtn.addEventListener("click", isFill[0]);
 if (fillBnt) fillBnt.addEventListener("click", isFill[1]);
 
-if (rangeBtn) rangeBtn.addEventListener("click", handleRangeClick);
-if (range) range.addEventListener("input", handleRangeChange);
+if (rangeBtn) {
+  rangeBtn.addEventListener("click", () => rangeDiv.classList.add(SHOWING_CN));
+  document.addEventListener("click", handleRangeDivHidden);
+  if (range) range.addEventListener("input", handleRangeChange);
+}
