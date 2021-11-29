@@ -3,14 +3,14 @@
   border-radius: 14px;
   padding: 1rem;
   cursor: pointer;
-}
 
-.menu div:hover {
-  color: #00eaa0;
-}
+  &:hover {
+    color: $mainColor;
+  }
 
-.menu div:active {
-  animation: blink-effect 0.1s step-end infinite;
+  &:active {
+    animation: blink-effect 0.1s step-end infinite;
+  }
 }
 
 @keyframes blink-effect {

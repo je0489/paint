@@ -1,5 +1,5 @@
-@import "./menu.css";
-@import "./tools.css";
+@import "./menu";
+@import "./tools";
 
 aside {
   border-radius: 14px;
@@ -15,7 +15,7 @@ aside {
 
 .tool {
   background: #ffffff;
-  width: 30rem;
+  width: 33rem;
   padding: 1rem 0.5rem;
   margin-bottom: 3rem;
   justify-content: space-between;

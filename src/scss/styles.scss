@@ -1,5 +1,9 @@
-@import "reset.css";
-@import "./tool/index.css";
+// config
+@import "./config/_variables";
+@import "./config/_reset";
+
+// tool
+@import "./tool/index";
 
 body {
   background-color: #f3f4f7;

@@ -1,3 +1,5 @@
+import "../scss/styles.scss";
+
 const canvas = document.getElementById("jsCanvas");
 const ctx = canvas.getContext("2d");
 const openBtn = document.getElementById("jsOpen");
@@ -35,12 +37,10 @@ const resetCanvas = () => {
   ctx.fillStyle = "white";
   ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
 
-  ctx.strokeStyle = "INITIAL_COLOR";
-  ctx.fillStyle = "INITIAL_COLOR";
-  ctx.lineWidth = 2.5;
-
-  canvas.width = CANVAS_SIZE;
-  canvas.height = CANVAS_SIZE;
+  ctx.strokeStyle = ctx.fillStyle = INITIAL_COLOR;
+  canvas.width = canvas.height = CANVAS_SIZE;
+  ctx.lineWidth = range.value = 2.5;
+  rangeDiv.children["jsRange"].setAttribute("data-before", `${range.value} |`);
 
   isFill[0]();
   painting = false;
