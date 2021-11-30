@@ -3,6 +3,7 @@ const config = {};
 // canvas
 config.CANVAS_SIZE = 700;
 config.LINE_WIDTH = 2.5;
+config.IMAGE_RATIO = 0.7;
 
 // tools hover & action
 config.INITIAL_COLOR = "#2c2c2c";

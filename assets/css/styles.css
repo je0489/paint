@@ -63,27 +63,27 @@ table {
 .menu div:active {
   animation: blink-effect 0.1s step-end infinite;
 }
+.menu div label {
+  cursor: inherit;
+}
+.menu div label input[type=file] {
+  display: none;
+}
 
 @keyframes blink-effect {
   50% {
     opacity: 0;
   }
 }
-input[type=file] {
-  display: none;
-}
-
 .tool section {
   display: flex;
   justify-content: space-evenly;
 }
 .tool section:first-child {
-  /* flex-grow: 1; */
-  flex-grow: 0.8;
+  flex-grow: 0.7;
 }
 .tool section:nth-child(2) {
-  /* flex-grow: 1.5; */
-  flex-grow: 1;
+  flex-grow: 1.4;
 }
 .tool section:last-child {
   flex-grow: 0.5;
@@ -91,8 +91,14 @@ input[type=file] {
 .tool section:not(:last-child) {
   border-right: 0.5px solid #b1b1b1;
 }
+.tool section div {
+  cursor: pointer;
+}
 .tool section div i:hover:not(.fa-palette) {
   color: #00eaa0;
+}
+.tool section div input[type=range] {
+  cursor: inherit;
 }
 
 .set-variable {

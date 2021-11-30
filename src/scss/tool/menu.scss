@@ -11,14 +11,18 @@
   &:active {
     animation: blink-effect 0.1s step-end infinite;
   }
+
+  label {
+    cursor: inherit;
+
+    input[type="file"] {
+      display: none;
+    }
+  }
 }
 
 @keyframes blink-effect {
   50% {
     opacity: 0;
   }
-}
-
-input[type="file"] {
-  display: none;
 }

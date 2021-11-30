@@ -13,7 +13,7 @@ export default class Base_layers {
     this.tools = new Base_tools(this.canvas, this.ctx);
   }
 
-  resetCanvas = () => {
+  resetCanvas() {
     const ctx = this.ctx,
       canvas = this.canvas,
       tools = this.tools;
@@ -29,7 +29,7 @@ export default class Base_layers {
 
     tools.mode().painting();
     tools.toolMode = ["painting", false];
-  };
+  }
 
   event() {
     if (this.tools) this.tools.event();
@@ -48,23 +48,51 @@ export default class Base_layers {
       this.resetBtn.addEventListener("click", this.resetCanvas);
   }
 
-  startPainting = () => (this.tools.toolMode = ["painting", true]);
-  stopPainting = () => (this.tools.toolMode = ["painting", false]);
+  startPainting = () => {
+    const { filling, settingImage } = this.tools.toolMode;
+    if (!filling && !settingImage.state)
+      this.tools.toolMode = ["painting", true];
+  };
 
-  onMouseMove = ({ offsetX, offsetY }) => {
-    const x = offsetX,
-      y = offsetY;
-    if (!this.tools.toolMode.painting) {
-      this.ctx.beginPath();
-      this.ctx.moveTo(x, y);
-    } else {
-      this.ctx.lineTo(x, y);
-      this.ctx.stroke();
+  stopPainting = () => {
+    this.tools.toolMode = ["painting", false];
+  };
+
+  onMouseMove = ({ offsetX: x, offsetY: y }) => {
+    const { painting, settingImage } = this.tools.toolMode;
+    if (!settingImage.state) {
+      if (!painting) {
+        this.ctx.beginPath();
+        this.ctx.moveTo(x, y);
+      } else {
+        this.ctx.lineTo(x, y);
+        this.ctx.stroke();
+      }
     }
   };
 
-  handleCanvasClick = () => {
-    if (this.tools.toolMode.filling)
+  handleCanvasClick = ({ offsetX, offsetY }) => {
+    const { filling, settingImage } = this.tools.toolMode;
+    if (filling)
       this.ctx.fillRect(0, 0, config.CANVAS_SIZE, config.CANVAS_SIZE);
+    if (settingImage.state) {
+      const { img, reduceSize } = settingImage;
+      this.ctx.drawImage(
+        img,
+        offsetX,
+        offsetY,
+        img.width * reduceSize,
+        img.height * reduceSize
+      );
+
+      this.tools.toolMode = [
+        "settingImage",
+        {
+          ...settingImage,
+          ...{ ["state"]: false },
+        },
+      ];
+      this.tools.settingModeBtn("painting");
+    }
   };
 }

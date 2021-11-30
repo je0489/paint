@@ -3,8 +3,8 @@ import Colors from "../gui/colors";
 
 /**
  * Tools 핸들러 클래스
- * @param canvas
- * @param ctx
+ * @param {canvas} canvas
+ * @param {canvas.context} ctx
  */
 export default class Base_tools {
   constructor(canvas, ctx) {
@@ -17,6 +17,8 @@ export default class Base_tools {
     this.rangeBtn = document.getElementById("jsSelectRange");
     this.rangeDiv = document.getElementById("jsRangeDiv");
     this.range = document.getElementById("jsRange");
+
+    this.pointerBtn = document.getElementById("jsPointer");
     this.paintBtn = document.getElementById("jsPaint");
     this.fillBnt = document.getElementById("jsFill");
 
@@ -27,22 +29,36 @@ export default class Base_tools {
   }
 
   toolModes = () => {
-    let modelist = { filling: null, painting: null };
+    let modelist = {
+      filling: null,
+      painting: null,
+      settingImage: {
+        state: false,
+        img: null,
+        reduceSize: 1,
+      },
+    };
     return () => ({
       painting: () => {
-        modelist.filling = false;
+        modelist.settingImage.state = modelist.filling = false;
         this.paintBtn.style.color = config.SECECT_COLOR;
-        this.fillBnt.style.color = "#000";
+        this.pointerBtn.style.color = this.fillBnt.style.color = "#000";
       },
       filling: () => {
         modelist.filling = true;
-        this.paintBtn.style.color = "#000";
+        modelist.settingImage.state = modelist.painting = false;
         this.fillBnt.style.color = config.SECECT_COLOR;
+        this.pointerBtn.style.color = this.paintBtn.style.color = "#000";
+      },
+      settingImage: () => {
+        modelist.painting = modelist.filling = false;
+        this.pointerBtn.style.color = config.SECECT_COLOR;
+        this.paintBtn.style.color = this.fillBnt.style.color = "#000";
       },
       getCurMode: () => modelist,
       setMode: (modes) => {
         Object.entries(modes).forEach(([key, value]) => {
-          if (typeof value === "boolean")
+          if (key === "settingImage" || typeof value === "boolean")
             modelist = { ...modelist, ...{ [key]: value } };
         });
       },
@@ -55,6 +71,10 @@ export default class Base_tools {
 
   set toolMode([key, value]) {
     this.mode().setMode({ [key]: value });
+  }
+
+  settingModeBtn(mode) {
+    return this.mode()[mode]();
   }
 
   resetTools() {
@@ -90,9 +110,13 @@ export default class Base_tools {
     }
 
     if (this.paintBtn)
-      this.paintBtn.addEventListener("click", this.mode().painting);
+      this.paintBtn.addEventListener("click", () =>
+        this.settingModeBtn("painting")
+      );
     if (this.fillBnt)
-      this.fillBnt.addEventListener("click", this.mode().filling);
+      this.fillBnt.addEventListener("click", () =>
+        this.settingModeBtn("filling")
+      );
     if (this.colors)
       this.colors.forEach((color) =>
         color.addEventListener("click", this.handleColorClick)
@@ -127,15 +151,28 @@ export default class Base_tools {
   };
 
   handleImageInsert = ({ target: { files } }) => {
-    const ctx = this.ctx,
-      url = URL.createObjectURL(files[0]),
-      img = new Image();
+    if (files.length) {
+      const url = URL.createObjectURL(files[0]),
+        img = new Image(),
+        mode = this.mode,
+        { settingImage } = mode().getCurMode();
 
-    img.onload = function () {
-      URL.revokeObjectURL(this.src);
-      ctx.drawImage(this, 0, 0);
-    };
-    img.src = url;
+      img.onload = function () {
+        const reduceSize =
+          (Math.max(...[this.width, this.height]) > config.CANVAS_SIZE
+            ? config.CANVAS_SIZE / Math.max(...[this.width, this.height])
+            : 1) * config.IMAGE_RATIO;
+
+        mode().settingImage();
+        mode().setMode({
+          settingImage: {
+            ...settingImage,
+            ...{ ["state"]: true, img, reduceSize },
+          },
+        });
+      };
+      img.src = url;
+    }
   };
 
   handleCanvasSave = () => {

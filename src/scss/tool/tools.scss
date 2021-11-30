@@ -3,13 +3,11 @@
   justify-content: space-evenly;
 
   &:first-child {
-    /* flex-grow: 1; */
-    flex-grow: 0.8;
+    flex-grow: 0.7;
   }
 
   &:nth-child(2) {
-    /* flex-grow: 1.5; */
-    flex-grow: 1;
+    flex-grow: 1.4;
   }
 
   &:last-child {
@@ -20,8 +18,16 @@
     border-right: 0.5px solid #b1b1b1;
   }
 
-  div i:hover:not(.fa-palette) {
-    color: $mainColor;
+  div {
+    cursor: pointer;
+
+    i:hover:not(.fa-palette) {
+      color: $mainColor;
+    }
+
+    input[type="range"] {
+      cursor: inherit;
+    }
   }
 }
 
