@@ -76,13 +76,15 @@ export default class Base_layers {
     if (filling)
       this.ctx.fillRect(0, 0, config.CANVAS_SIZE, config.CANVAS_SIZE);
     if (settingImage.state) {
-      const { img, reduceSize } = settingImage;
+      const { img, reduceSize } = settingImage,
+        width = img.width * reduceSize,
+        height = img.height * reduceSize;
       this.ctx.drawImage(
         img,
-        offsetX,
-        offsetY,
-        img.width * reduceSize,
-        img.height * reduceSize
+        offsetX - width / 2,
+        offsetY - height / 2,
+        width,
+        height
       );
 
       this.tools.toolMode = [
