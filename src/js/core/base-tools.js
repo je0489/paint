@@ -1,4 +1,5 @@
 import config from "../config";
+import Colors from "../gui/colors";
 
 /**
  * Tools 핸들러 클래스
@@ -19,7 +20,9 @@ export default class Base_tools {
     this.paintBtn = document.getElementById("jsPaint");
     this.fillBnt = document.getElementById("jsFill");
 
+    Colors.display();
     this.colors = Array.from(document.getElementsByClassName("jsColor"));
+
     this.mode = new this.toolModes();
   }
 
@@ -60,6 +63,15 @@ export default class Base_tools {
       "data-before",
       `${config.LINE_WIDTH} |`
     );
+
+    this.resetPalette();
+    this.colors[0].classList.add(config.COLOR_CLICKED_CN);
+  }
+
+  resetPalette() {
+    this.colors.forEach((color) =>
+      color.classList.remove(config.COLOR_CLICKED_CN)
+    );
   }
 
   event() {
@@ -91,6 +103,9 @@ export default class Base_tools {
     const {
       style: { backgroundColor: bgColor },
     } = target;
+
+    this.resetPalette();
+    target.classList.add(config.COLOR_CLICKED_CN);
 
     this.ctx.strokeStyle = bgColor;
     this.ctx.fillStyle = bgColor;
