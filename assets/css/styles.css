@@ -140,8 +140,15 @@ input[type=file] {
   height: 1.4rem;
   border-radius: 25px;
   cursor: pointer;
-  margin-left: 0.2rem;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  margin-left: 0.1rem;
+}
+.controls__colors .controls__color:not(:last-child) {
+  margin-right: 0.1rem;
+}
+.controls__colors .clicked {
+  transform: scale(1.5);
+  margin: 0 0.4rem !important;
 }
 
 .hidden {
