@@ -1,5 +1,6 @@
 import config from "../config";
 import Colors from "../gui/colors";
+import Tooltip from "./modal/tooltip";
 
 /**
  * Tools 핸들러 클래스
@@ -25,6 +26,7 @@ export default class Base_tools {
     Colors.display();
     this.colors = Array.from(document.getElementsByClassName("jsColor"));
 
+    this.tooltip = new Tooltip();
     this.mode = new this.toolModes();
   }
 
@@ -109,6 +111,14 @@ export default class Base_tools {
         this.range.addEventListener("input", this.handleRangeChange);
     }
 
+    if (this.pointerBtn) {
+      this.pointerBtn.addEventListener("mouseover", ({ target }) =>
+        this.tooltip.showModal(target)
+      );
+      this.pointerBtn.addEventListener("mouseleave", () =>
+        this.tooltip.closeModal()
+      );
+    }
     if (this.paintBtn)
       this.paintBtn.addEventListener("click", () =>
         this.settingModeBtn("painting")
