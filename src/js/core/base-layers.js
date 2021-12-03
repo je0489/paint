@@ -45,7 +45,7 @@ export default class Base_layers {
       );
     }
     if (this.resetBtn)
-      this.resetBtn.addEventListener("click", this.resetCanvas);
+      this.resetBtn.addEventListener("click", () => this.resetCanvas());
   }
 
   startPainting = () => {
