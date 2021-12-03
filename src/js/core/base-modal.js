@@ -1,8 +1,7 @@
 export default class Base_modal {
   constructor(classname, msg) {
-    this.ui = document.createElement("ui");
     this.classname = classname;
-    this.msg = msg;
+    this.ui = msg;
   }
 
   showModal({ parentNode }) {
@@ -14,16 +13,17 @@ export default class Base_modal {
   }
 
   createHTML(msg) {
-    this.ui.classList.add("modal", `modal-${this.classname}`);
-    this.ui.innerHTML = `<p>${msg}</p>`;
-    return this.ui;
+    const ui = document.createElement("ui");
+    ui.classList.add("modal", `modal-${this.classname}`);
+    ui.innerHTML = `<p>${msg}</p>`;
+    return ui;
   }
 
-  /**
-   * 인스턴스 생성 시 메세지를 html 문자열로 변환.
-   * @param {string} msg: The message to be displayed in the modal
-   */
-  set msg(msg) {
-    this._msg = this.createHTML(msg);
+  get ui() {
+    return this._ui;
+  }
+
+  set ui(msg) {
+    this._ui = this.createHTML(msg);
   }
 }
