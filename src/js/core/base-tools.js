@@ -1,6 +1,7 @@
 import config from "../config";
 import Colors from "../gui/colors";
 import Tooltip from "./modal/tooltip";
+import Message from "./modal/message";
 
 /**
  * Tools 핸들러 클래스
@@ -27,6 +28,8 @@ export default class Base_tools {
     this.colors = Array.from(document.getElementsByClassName("jsColor"));
 
     this.tooltip = new Tooltip();
+    this.message = new Message();
+
     this.mode = new this.toolModes();
   }
 
@@ -165,6 +168,7 @@ export default class Base_tools {
       const url = URL.createObjectURL(files[0]),
         img = new Image(),
         mode = this.mode,
+        message = this.message,
         { settingImage } = mode().getCurMode();
 
       img.onload = function () {
@@ -173,6 +177,7 @@ export default class Base_tools {
             ? config.CANVAS_SIZE / Math.max(...[this.width, this.height])
             : 1) * config.IMAGE_RATIO;
 
+        message.showModal();
         mode().settingImage();
         mode().setMode({
           settingImage: {

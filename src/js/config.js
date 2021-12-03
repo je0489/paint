@@ -26,6 +26,7 @@ config.COLORS = [
 ];
 
 config.MSG = {
+  SELECTED_FILE_OPEN_BTN: "Select an image location you want on the canvas 📍",
   HOVER_IN_POINTER_BNT: `현재는 이미지 삽입 시에만 사용할 수 있습니다!`,
 };
 

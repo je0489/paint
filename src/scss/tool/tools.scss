@@ -36,6 +36,18 @@
   z-index: 1;
   font-weight: 200;
 
+  &.modal-message {
+    margin-top: 9.2rem;
+    padding: 0.7rem 1.2rem;
+    font-size: 1.3rem;
+    font-family: none;
+    border-radius: 0.9em;
+    background: $mainColor;
+    color: #000;
+    animation: showMsg 3.5s cubic-bezier(0.88, 0, 0.88, 0) 2 alternate-reverse
+      forwards;
+  }
+
   &.modal-tooltip {
     opacity: 0.6;
     padding: 0.3rem 0.5rem;
@@ -109,4 +121,13 @@
 
 .showing {
   display: flex;
+}
+
+@keyframes showMsg {
+  from {
+    opacity: 0.6;
+  }
+  to {
+    opacity: 0;
+  }
 }

@@ -4,8 +4,8 @@ export default class Base_modal {
     this.ui = msg;
   }
 
-  showModal({ parentNode }) {
-    parentNode.after(this.ui);
+  showModal(target) {
+    target.after(this.ui);
   }
 
   closeModal() {
