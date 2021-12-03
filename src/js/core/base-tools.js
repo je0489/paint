@@ -107,7 +107,7 @@ export default class Base_tools {
 
     if (this.rangeBtn) {
       this.rangeBtn.addEventListener("click", () =>
-        this.rangeDiv.classList.add(config.RANGE_SHOWING_CN)
+        this.rangeDiv.classList.toggle(config.RANGE_SHOWING_CN)
       );
       document.addEventListener("click", this.handleRangeDivHiding);
       if (this.range)
